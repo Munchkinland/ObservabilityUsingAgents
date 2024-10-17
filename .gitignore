@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Entorno virtual
+venv/
+env/
+ENV/
+.venv/
+.env
+
+# Archivos de configuración
+*.pyc
+*.db
+*.sqlite3
+
+# Docker
+*.dockerfile
+docker-compose.override.yml
+docker-compose.yml
+
+# Logs
+*.log
+
+# Archivos de prueba
+test_*.py
+*_test.py
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Otros
+*.bak
+*.tmp
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db

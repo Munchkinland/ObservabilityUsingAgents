@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./flask-app
+    container_name: flask_app
+    networks:
+      monitoring:
+        ipv4_address: 172.20.0.2
+    ports:
+      - "5000:5000"
+
+  locust:
+    build: ./locust
+    container_name: locust_test
+    command: locust --host=http://web:5000
+    networks:
+      monitoring:
+        ipv4_address: 172.20.0.3
+    ports:
+      - "8089:8089"
+
+  jmeter:
+    build: ./jmeter
+    container_name: jmeter_test
+    networks:
+      monitoring:
+        ipv4_address: 172.20.0.4
+
+  newrelic-agent:
+    build: ./agents/newrelic
+    container_name: newrelic_agent
+    environment:
+      - NEW_RELIC_API_KEY=${NEW_RELIC_API_KEY}
+      - NEW_RELIC_APP_NAME=${NEW_RELIC_APP_NAME}
+    networks:
+      monitoring:
+        ipv4_address: 172.20.0.5
+
+  datadog-agent:
+    build: ./agents/datadog
+    container_name: datadog_agent
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      monitoring:
+        ipv4_address: 172.20.0.6
+
+  hyperdx-agent:
+    build: ./agents/hyperdx
+    container_name: hyperdx_agent
+    environment:
+      - HDX_API_KEY=${HDX_API_KEY}
+    networks:
+      monitoring:
+        ipv4_address: 172.20.0.7
+
+networks:
+  monitoring:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

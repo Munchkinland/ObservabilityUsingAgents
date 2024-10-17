@@ -1,0 +1,4 @@
+api_key: dc7c97f267ce64973d5d095b223d99bc
+logs_enabled: true
+process_config:
+  enabled: "true"
